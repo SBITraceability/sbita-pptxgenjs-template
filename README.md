@@ -55,7 +55,8 @@ const pres = new pptxgen();
 pres.layout = "LAYOUT_WIDE";
 
 // スライドを追加
-addTitleSlide(pres, "プレゼンタイトル", "サブタイトル", "発表者", "2026年");
+// addTitleSlide(pres, メインタイトル, サブタイトル, 備考テキスト, 備考ハイライト)
+addTitleSlide(pres, "メインタイトル", "サブタイトル", "備考: ", "ハイライト部分");
 addContentSlide(pres, "概要", ["ポイント1", "ポイント2", "ポイント3"]);
 addClosingSlide(pres, "ご清聴ありがとうございました");
 

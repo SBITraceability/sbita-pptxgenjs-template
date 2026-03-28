@@ -81,49 +81,93 @@ function addFooter(slide, showConfidential = true) {
 // ============================================
 
 /**
- * 1. タイトルスライド
+ * 1. タイトルスライド（元テンプレート準拠）
+ * - 左寄せレイアウト
+ * - 備考行 + メインタイトル行
  */
-function addTitleSlide(pres, title, subtitle, author = "", date = "") {
+function addTitleSlide(pres, title, subtitle, noteText = "", noteHighlight = "") {
   const slide = pres.addSlide();
 
-  // タイトル（下線付き）
-  slide.addText(title || "プレゼンテーションタイトル", {
-    x: LAYOUT.MARGIN,
-    y: 2.8,
-    w: LAYOUT.WIDTH - LAYOUT.MARGIN * 2,
-    h: 1.0,
-    align: "center",
-    lineSpacing: 36,
-    ...STYLES.titleWithUnderline,
+  const leftMargin = 0.68;  // 約622300 EMU
+  const noteY = 3.14;       // 備考行のY位置
+  const titleY = 3.48;      // タイトル行のY位置
+
+  // 備考行（グレー + 赤字下線部分）
+  if (noteText || noteHighlight) {
+    const noteTextParts = [];
+
+    if (noteText) {
+      noteTextParts.push({
+        text: noteText,
+        options: {
+          fontFace: FONTS.HEADING_JP,
+          fontSize: 14,
+          bold: true,
+          color: COLORS.TEXT_LIGHT,
+        },
+      });
+    }
+
+    if (noteHighlight) {
+      noteTextParts.push({
+        text: noteHighlight,
+        options: {
+          fontFace: FONTS.HEADING_JP,
+          fontSize: 14,
+          bold: true,
+          color: COLORS.BRAND_RED,
+          underline: { type: "sng", color: COLORS.BRAND_GOLD },
+        },
+      });
+    }
+
+    if (noteTextParts.length > 0) {
+      slide.addText(noteTextParts, {
+        x: leftMargin,
+        y: noteY,
+        w: 8,
+        h: 0.35,
+        valign: "middle",
+      });
+    }
+  }
+
+  // メインタイトル行
+  const titleParts = [];
+
+  // 小さいタイトル（サブタイトル的な役割）
+  if (subtitle) {
+    titleParts.push({
+      text: subtitle + "  ",
+      options: {
+        fontFace: FONTS.HEADING_JP,
+        fontSize: 24,
+        bold: true,
+        color: COLORS.TEXT_PRIMARY,
+      },
+    });
+  }
+
+  // メインタイトル（下線付き）
+  titleParts.push({
+    text: title || "タイトル",
+    options: {
+      fontFace: FONTS.HEADING_JP,
+      fontSize: 32,
+      bold: true,
+      color: COLORS.TEXT_PRIMARY,
+      underline: { type: "sng", color: COLORS.BRAND_GOLD },
+    },
   });
 
-  // サブタイトル
-  if (subtitle) {
-    slide.addText(subtitle, {
-      x: LAYOUT.MARGIN,
-      y: 4.0,
-      w: LAYOUT.WIDTH - LAYOUT.MARGIN * 2,
-      h: 0.6,
-      align: "center",
-      fontFace: FONTS.HEADING_JP,
-      fontSize: FONT_SIZES.HEADING2,
-      color: COLORS.TEXT_SECONDARY,
-    });
-  }
-
-  // 著者・日付
-  if (author || date) {
-    slide.addText(`${author}${author && date ? "  |  " : ""}${date}`, {
-      x: LAYOUT.MARGIN,
-      y: 5.5,
-      w: LAYOUT.WIDTH - LAYOUT.MARGIN * 2,
-      h: 0.4,
-      align: "center",
-      fontFace: FONTS.BODY_JP,
-      fontSize: FONT_SIZES.BODY_SMALL,
-      color: COLORS.TEXT_LIGHT,
-    });
-  }
+  slide.addText(titleParts, {
+    x: leftMargin,
+    y: titleY,
+    w: 10,
+    h: 0.8,
+    valign: "middle",
+    lineSpacing: 38,
+  });
 
   addFooter(slide);
   return slide;
@@ -927,7 +971,7 @@ async function generateTemplate() {
 
   // 全スライドを生成
   console.log("1. タイトルスライド");
-  addTitleSlide(pres, "プレゼンテーションタイトル", "サブタイトルをここに", "発表者名", "2024年1月1日");
+  addTitleSlide(pres, "下線付きタイトル", "タイトル", "備考タイトル「", "赤字下線」");
 
   console.log("2. セクションディバイダー（Vision）");
   addSectionSlide(pres, "大見出し", "Vision");

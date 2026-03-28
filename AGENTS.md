@@ -125,7 +125,8 @@ const { addTitleSlide, addContentSlide } = require("./template/generate-template
 const pres = new pptxgen();
 pres.layout = "LAYOUT_WIDE";
 
-addTitleSlide(pres, "プレゼンタイトル", "サブタイトル", "発表者", "2024/01/01");
+// addTitleSlide(pres, メインタイトル, サブタイトル, 備考テキスト, 備考ハイライト)
+addTitleSlide(pres, "メインタイトル", "サブタイトル", "備考: ", "ハイライト");
 addContentSlide(pres, "見出し", ["ポイント1", "ポイント2", "ポイント3"]);
 
 pres.writeFile({ fileName: "output/presentation.pptx" });
@@ -135,7 +136,7 @@ pres.writeFile({ fileName: "output/presentation.pptx" });
 
 | 関数名 | 用途 |
 |--------|------|
-| `addTitleSlide(pres, title, subtitle, author, date)` | タイトルスライド |
+| `addTitleSlide(pres, title, subtitle, noteText, noteHighlight)` | タイトルスライド |
 | `addSectionSlide(pres, title, headerText)` | セクション区切り |
 | `addContentSlide(pres, heading, bulletPoints[])` | 箇条書きスライド |
 | `addTwoColumnSlide(pres, heading, left, right)` | 2カラム |

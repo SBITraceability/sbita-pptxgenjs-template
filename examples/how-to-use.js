@@ -32,9 +32,9 @@ async function createHowToUseSlides() {
   addTitleSlide(
     pres,
     "PptxGenJS テンプレート",
-    "AIを活用したスライド自動生成システム",
-    "SBI Traceability",
-    "2024年"
+    "AIを活用した",
+    "スライド自動生成システム - ",
+    "SBI Traceability"
   );
 
   // 2. アジェンダ
