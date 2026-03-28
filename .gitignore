@@ -2,7 +2,7 @@
 node_modules/
 
 # Generated files
-*.pptx
+# (PPTXファイルはサンプルとして含める)
 
 # OS files
 .DS_Store
