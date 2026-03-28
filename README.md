@@ -59,8 +59,8 @@ addTitleSlide(pres, "プレゼンタイトル", "サブタイトル", "発表者
 addContentSlide(pres, "概要", ["ポイント1", "ポイント2", "ポイント3"]);
 addClosingSlide(pres, "ご清聴ありがとうございました");
 
-// ファイル出力
-pres.writeFile({ fileName: "output.pptx" });
+// ファイル出力（output/ フォルダに保存）
+pres.writeFile({ fileName: "output/my-presentation.pptx" });
 ```
 
 ```bash
@@ -99,10 +99,14 @@ sbita-pptxgenjs-template/
 │   ├── generate-template.js  # テンプレート関数 & サンプル生成
 │   ├── TEMPLATE.md           # 詳細仕様書
 │   └── sbita-template.pptx   # 生成されたサンプル
-└── examples/
-    ├── how-to-use.js         # 使い方説明スライド生成スクリプト
-    └── how-to-use.pptx       # 生成されたサンプル
+├── examples/
+│   ├── how-to-use.js         # 使い方説明スライド生成スクリプト
+│   ├── how-to-use.pptx       # 生成されたサンプル
+│   └── introduction.pptx     # 紹介用スライド
+└── output/                   # 生成したPPTXの出力先（.gitignore対象）
 ```
+
+> **Note:** `output/` フォルダは `.gitignore` で除外されています。新しくスライドを作成する場合は、このフォルダに出力することでリポジトリを汚さずに済みます。
 
 ## カスタマイズ
 

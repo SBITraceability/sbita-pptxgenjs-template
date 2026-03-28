@@ -10,12 +10,24 @@
 sbita-pptxgenjs-template/
 ├── AGENTS.md                     # このファイル（AI向けガイド）
 ├── package.json                  # 依存関係
-└── template/
-    ├── theme.js                  # カラー・フォント・レイアウト定数
-    ├── generate-template.js      # テンプレート生成スクリプト
-    ├── sbita-template.pptx       # 生成済みテンプレート
-    └── TEMPLATE.md               # 詳細仕様書
+├── template/
+│   ├── theme.js                  # カラー・フォント・レイアウト定数
+│   ├── generate-template.js      # テンプレート生成スクリプト
+│   ├── sbita-template.pptx       # 生成済みテンプレート
+│   └── TEMPLATE.md               # 詳細仕様書
+├── examples/                     # サンプルスクリプト & PPTX
+└── output/                       # 生成したPPTXの出力先（.gitignore対象）
 ```
+
+## 重要: 出力先について
+
+**新しくスライドを作成する場合は、必ず `output/` フォルダに出力してください。**
+
+```javascript
+pres.writeFile({ fileName: "output/my-presentation.pptx" });
+```
+
+`output/` フォルダは `.gitignore` で除外されているため、リポジトリを汚しません。
 
 ## デザインルール
 
@@ -102,7 +114,7 @@ slide.addText("タイトル", {
 // フッター追加
 addFooter(slide);
 
-pres.writeFile({ fileName: "output.pptx" });
+pres.writeFile({ fileName: "output/presentation.pptx" });
 ```
 
 ### テンプレート関数を使用
@@ -116,7 +128,7 @@ pres.layout = "LAYOUT_WIDE";
 addTitleSlide(pres, "プレゼンタイトル", "サブタイトル", "発表者", "2024/01/01");
 addContentSlide(pres, "見出し", ["ポイント1", "ポイント2", "ポイント3"]);
 
-pres.writeFile({ fileName: "output.pptx" });
+pres.writeFile({ fileName: "output/presentation.pptx" });
 ```
 
 ## 利用可能な関数

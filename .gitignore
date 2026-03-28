@@ -1,8 +1,11 @@
 # Dependencies
 node_modules/
 
-# Generated files
-# (PPTXファイルはサンプルとして含める)
+# Generated output files
+output/*.pptx
+
+# Keep output directory structure
+!output/.gitkeep
 
 # OS files
 .DS_Store
