@@ -1,0 +1,25 @@
+{
+  "name": "sbita-pptxgenjs-template",
+  "version": "1.0.0",
+  "description": "sbitaブランドテーマのPptxGenJS向けテンプレート",
+  "main": "template/generate-template.js",
+  "scripts": {
+    "generate-template": "node template/generate-template.js"
+  },
+  "keywords": [
+    "pptx",
+    "powerpoint",
+    "pptxgenjs",
+    "template",
+    "sbita"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pptxgenjs": "^4.0.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-icons": "^5.6.0",
+    "sharp": "^0.34.5"
+  }
+}
