@@ -1,5 +1,5 @@
 /**
- * README紹介スライド - 楽しいバージョン
+ * README紹介スライド - 新テンプレート版
  */
 
 const pptxgen = require("pptxgenjs");
@@ -22,40 +22,22 @@ const {
 const { COLORS, FONTS, FONT_SIZES, LAYOUT } = require("../template/theme");
 
 async function createIntroSlides() {
-  console.log("楽しい紹介スライドを生成中...\n");
+  console.log("使い方紹介スライドを生成中...\n");
 
   const pres = new pptxgen();
   pres.layout = "LAYOUT_WIDE";
   pres.author = "SBI Traceability";
   pres.title = "PptxGenJS テンプレート紹介";
 
-  // 1. タイトル - インパクト重視
+  // 1. タイトルスライド（新フォーマット）
   console.log("1. タイトル");
-  const slide1 = pres.addSlide();
-  slide1.addText("もうパワポ作成で\n消耗するのはやめよう", {
-    x: 0.5,
-    y: 1.8,
-    w: LAYOUT.WIDTH - 1,
-    h: 2,
-    align: "center",
-    fontFace: FONTS.HEADING_JP,
-    fontSize: 40,
-    color: COLORS.TEXT_PRIMARY,
-    bold: true,
-    lineSpacing: 60,
-  });
-  slide1.addText("PptxGenJS テンプレート で スライド作成を自動化", {
-    x: 0.5,
-    y: 4.2,
-    w: LAYOUT.WIDTH - 1,
-    h: 0.8,
-    align: "center",
-    fontFace: FONTS.HEADING_JP,
-    fontSize: 24,
-    color: COLORS.BRAND_GOLD,
-    bold: true,
-  });
-  addFooter(slide1);
+  addTitleSlide(
+    pres,
+    "PptxGenJS テンプレート",
+    "AIを活用した",
+    "スライド自動生成システム - ",
+    "使い方ガイド"
+  );
 
   // 2. 問題提起
   console.log("2. 問題提起");
@@ -228,23 +210,23 @@ async function createIntroSlides() {
     { value: "0円", label: "追加コスト" },
   ]);
 
-  // 8. レイアウト一覧
-  console.log("8. レイアウト一覧");
+  // 8. セットアップ
+  console.log("8. セットアップ");
+  addTimelineSlide(pres, "セットアップも超カンタン", [
+    { title: "Clone", desc: "リポジトリをクローン" },
+    { title: "Install", desc: "npm install" },
+    { title: "Generate", desc: "npm run generate-template" },
+    { title: "Done!", desc: "すぐ使える" },
+  ]);
+
+  // 9. レイアウト一覧
+  console.log("9. レイアウト一覧");
   addContentSlide(pres, "16種類のレイアウトを用意", [
     "タイトル / セクション区切り / クロージング",
     "箇条書き / 2カラム / 3カラム",
     "KPIカード / タイムライン / Before-After比較",
     "アジェンダ / テーブル / 引用",
     "画像中央 / テキスト+図 / アイコングリッド / 強調",
-  ]);
-
-  // 9. セットアップ
-  console.log("9. セットアップ");
-  addTimelineSlide(pres, "セットアップも超カンタン", [
-    { title: "Clone", desc: "リポジトリをクローン" },
-    { title: "Install", desc: "npm install" },
-    { title: "Generate", desc: "npm run generate-template" },
-    { title: "Done!", desc: "すぐ使える" },
   ]);
 
   // 10. コード例
@@ -279,10 +261,10 @@ async function createIntroSlides() {
     "const pres = new pptxgen();",
     "pres.layout = 'LAYOUT_WIDE';",
     "",
-    "addTitleSlide(pres, 'タイトル', 'サブタイトル');",
-    "addContentSlide(pres, '見出し', ['ポイント1', 'ポイント2']);",
+    "// タイトルスライドを追加",
+    "addTitleSlide(pres, 'メインタイトル', 'サブ', '備考', 'ハイライト');",
     "",
-    "pres.writeFile({ fileName: 'output.pptx' });",
+    "pres.writeFile({ fileName: 'output/presentation.pptx' });",
   ];
 
   slide10.addText(codeLines.join("\n"), {
@@ -297,8 +279,17 @@ async function createIntroSlides() {
   });
   addFooter(slide10);
 
-  // 11. カスタマイズ
-  console.log("11. カスタマイズ");
+  // 11. 出力先について
+  console.log("11. 出力先");
+  addContentSlide(pres, "出力先フォルダについて", [
+    "output/ フォルダに出力すればリポジトリを汚さない",
+    "output/ は .gitignore で除外済み",
+    "サンプルPPTXは template/ と examples/ に配置",
+    "新規作成時は output/ に保存を推奨",
+  ]);
+
+  // 12. カスタマイズ
+  console.log("12. カスタマイズ");
   addContentSlide(pres, "カスタマイズも自由自在", [
     "theme.js を編集するだけ",
     "カラーパレットを自社ブランドに変更可能",
@@ -307,19 +298,19 @@ async function createIntroSlides() {
     "変更後は npm run generate-template で反映",
   ]);
 
-  // 12. 引用（推しコメント風）
-  console.log("12. 推しコメント");
+  // 13. 引用（推しコメント風）
+  console.log("13. 推しコメント");
   addQuoteSlide(
     pres,
     "パワポ作成が苦痛だった過去の自分に教えてあげたい。\nこのテンプレートがあれば、もっと早く帰れたのに。",
     "とある開発者"
   );
 
-  // 13. まとめ
-  console.log("13. まとめ");
-  const slide13 = pres.addSlide();
-  addHeaderLine(slide13);
-  slide13.addText("まとめ", {
+  // 14. まとめ
+  console.log("14. まとめ");
+  const slide14 = pres.addSlide();
+  addHeaderLine(slide14);
+  slide14.addText("まとめ", {
     x: 0,
     y: 0.1,
     w: LAYOUT.WIDTH,
@@ -332,15 +323,15 @@ async function createIntroSlides() {
   });
 
   const summaryPoints = [
-    { text: "Claude Code に話しかけるだけでスライド完成", color: COLORS.TEXT_PRIMARY },
-    { text: "ブランドデザインが自動で統一される", color: COLORS.TEXT_PRIMARY },
-    { text: "16種類のレイアウトですぐ使える", color: COLORS.TEXT_PRIMARY },
-    { text: "セットアップは npm install だけ", color: COLORS.TEXT_PRIMARY },
-    { text: "カスタマイズも theme.js を編集するだけ", color: COLORS.TEXT_PRIMARY },
+    "Claude Code に話しかけるだけでスライド完成",
+    "ブランドデザインが自動で統一される",
+    "16種類のレイアウトですぐ使える",
+    "セットアップは npm install だけ",
+    "カスタマイズも theme.js を編集するだけ",
   ];
 
-  slide13.addText(summaryPoints.map(p => ({
-    text: p.text,
+  slide14.addText(summaryPoints.map(p => ({
+    text: p,
     options: { bullet: { code: "2713", color: COLORS.BRAND_GOLD } }
   })), {
     x: 1.5,
@@ -353,16 +344,16 @@ async function createIntroSlides() {
     bold: true,
     lineSpacing: 36,
   });
-  addFooter(slide13);
+  addFooter(slide14);
 
-  // 14. CTA
-  console.log("14. CTA");
-  const slide14 = pres.addSlide();
-  slide14.addShape("rect", {
+  // 15. CTA
+  console.log("15. CTA");
+  const slide15 = pres.addSlide();
+  slide15.addShape("rect", {
     x: 0, y: 0, w: LAYOUT.WIDTH, h: LAYOUT.HEIGHT,
     fill: { color: COLORS.TEXT_PRIMARY },
   });
-  slide14.addText("今すぐ試してみよう", {
+  slide15.addText("今すぐ試してみよう", {
     x: 0.5,
     y: 2.0,
     w: LAYOUT.WIDTH - 1,
@@ -373,7 +364,7 @@ async function createIntroSlides() {
     color: COLORS.BG_WHITE,
     bold: true,
   });
-  slide14.addText("git clone → npm install → 完了", {
+  slide15.addText("git clone → npm install → 完了", {
     x: 0.5,
     y: 3.3,
     w: LAYOUT.WIDTH - 1,
@@ -384,7 +375,7 @@ async function createIntroSlides() {
     color: COLORS.BRAND_GOLD,
     bold: true,
   });
-  slide14.addText("あなたのパワポ作成ライフが変わります", {
+  slide15.addText("あなたのパワポ作成ライフが変わります", {
     x: 0.5,
     y: 4.5,
     w: LAYOUT.WIDTH - 1,
@@ -395,8 +386,8 @@ async function createIntroSlides() {
     color: COLORS.TEXT_LIGHT,
   });
 
-  // 15. クロージング
-  console.log("15. クロージング");
+  // 16. クロージング
+  console.log("16. クロージング");
   addClosingSlide(
     pres,
     "Let's Automate!",
